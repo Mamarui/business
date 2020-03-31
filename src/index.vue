@@ -20,6 +20,8 @@ import Home from './components/index/home';
 import ProductManage from './components/product/productManage'
 import OrderManage from './components/orders/orderManage'
 import OwnManage from './components/mine/ownManage'
+import utils from './keyUtils'
+import requestData from './requestMethod.js'
 export default {
     components:{
         Home,
@@ -30,14 +32,42 @@ export default {
     data() {
         return {
             active:'home',
-            curTitle:'XXX商家微信平台'
+            curTitle:''
         }
+    },
+    created(){
+	//解析参数
+		let code = utils.getUrlKey('code')
+		let state = utils.getUrlKey('state')
+        requestData('/api/oauth/mp/authorize',{
+            state:state,
+            code:code
+        },'get').then((res)=>{
+            if(res.status==200){
+                // sessionStorage.setItem('user_id',res.data.user_id);
+                sessionStorage.setItem('user_id',1);
+                if(res.data.hasbind){
+                    sessionStorage.setItem('avatar',res.data.avatar);
+                    sessionStorage.setItem('name',res.data.name);
+                    sessionStorage.setItem('openid',res.data.openid);
+                    sessionStorage.setItem('role',res.data.role);
+                    sessionStorage.setItem('phone',res.data.phone);
+                    sessionStorage.setItem('merchant',res.data.merchant);
+                    sessionStorage.setItem('merchant_name',res.data.merchant_name);
+                    this.curTitle = res.data.merchant_name;
+                }else{
+                    this.$router.push({ name:'login', query:{ user_id:res.data.user_id } });
+                }
+            }
+        },(err)=>{
+            alert(err)
+        })
     },
     methods:{
         onChange : function(){
             switch (this.active) {
                 case 'home':
-                    this.curTitle = 'XXX商家微信平台';
+                    this.curTitle = sessionStorage.getItem('merchant_name');
                     break;
                 case 'product':
                     this.curTitle = '商品管理';
@@ -51,7 +81,7 @@ export default {
                 default:
                     break;
             }
-        }
+        },
     }
 }
 </script>

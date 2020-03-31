@@ -53,7 +53,7 @@ export default {
         submit(){
             requestData('/api/wechat/mmc/tel/verify',{
                 verification_code:this.sms,
-                user_id:1
+                user_id:sessionStorage.getItem('user_id'),
             },'post').then((res)=>{
                 if(res.status==200){
                     this.isSend = false;

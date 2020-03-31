@@ -1,12 +1,14 @@
 <template>
     <div class="container">
-        <van-nav-bar title="2/2：设置交易密码"
+        <van-nav-bar
+            title="解绑银行卡"
             left-arrow
+            left-text="取消"
             @click-left="onClickLeft"/>
-        <p class="mention">请设置交易密码，方便提现</p>
         <van-password-input
+            style="margin-top:1rem;"
             :value="password"
-            info="密码为 6 位数字"
+            info="请输入支付密码，以验证身份"
             :focused="showKeyboard"
             @focus="showKeyboard = true"/>
         <van-number-keyboard
@@ -14,7 +16,6 @@
             @input="onInput"
             @delete="onDelete"
             @blur="showKeyboard = false"/>
-        <van-button round class="submitBtn" type="warning" @click="submit">确定</van-button>
     </div>
 </template>
 
@@ -37,33 +38,41 @@ export default {
         onDelete() {
             this.password = this.password.slice(0, this.password.length - 1);
         },
-        submit(){
-            requestData('/api/wechat/mmc/trade_pwd/change',{
-                trade_pwd:this.password,
-                id:1
-            },'post').then((res)=>{
+        verifyPwd(){
+            var that = this;
+            requestData('/api/wechat/mmc/trade/verify',{
+                user_id:sessionStorage.getItem('user_id'),
+                trade_pwd:this.password
+            },'get').then((res)=>{
                 if(res.status==200){
-                    this.$toast('设置成功！');
-                    this.$router.push({ path:'account' })
+                    that.unbind();
                 }else{
                     this.$toast(res.message);
+                    this.password='';
                 }
             },(err)=>{
                 alert(err)
-            })
+            }) 
+        },
+        unbind(){
+            requestData('/api/wechat/mmc/account/unbind',{
+                id:1
+            },'post').then((res)=>{
+                if(res.status==200){
+                    this.$toast(res.message);
+                    this.$router.push({ path:'bankManage' });  
+                }
+            },(err)=>{
+                alert(err)
+            }) 
+        }
+    },
+    watch:{
+        password(){
+            if(this.password.length==6){
+                this.verifyPwd();
+            }
         }
     }
 }
 </script>
-
-<style lang="css" scoped>
-    .container .mention{
-        font-size: 0.8rem;
-        padding-left: 1rem;
-    }
-    .container .submitBtn{
-        display: block;
-        margin: 2rem auto;
-        width: 80%;
-    }
-</style>

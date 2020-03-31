@@ -61,6 +61,7 @@
 
 <script>
 import requestData  from '../../requestMethod';
+import upload  from '../../upload';
 export default {
     data(){
         return{
@@ -106,7 +107,7 @@ export default {
         // 商品类型部分
         getColumns(){
             requestData('/api/wechat/mmc/goods/catlist',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'post').then((res)=>{
                 if(res.status == 200){
                     this.list = res.data;
@@ -129,8 +130,15 @@ export default {
             this.columns = [];
         },
         // 图片修改
+        // 图片修改
         changeImg(file){
-            this.business.logo = file.content;
+            let fd = new FormData();
+            fd.append('upfile', file.file);
+            upload('/api/upload',fd,'post').then((res)=>{
+                this.business.logo = res.url;
+            },(err)=>{
+                alert(err)
+            })
         },
         onClickRight(){
             var url_='';
@@ -151,7 +159,7 @@ export default {
             }
             requestData(url_,{
                 ...this.business,
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'post').then((res)=>{
                 this.$toast(res.message);
                 if(res.status == 200){

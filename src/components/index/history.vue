@@ -116,7 +116,7 @@ export default {
     created(){
         var day = new Date(),
             year = day.getFullYear(),
-            month = day.getMonth(),
+            month = day.getMonth()+1,
             date = day.getDate();
             if(date<10){
                 date = '0' + date;
@@ -134,8 +134,8 @@ export default {
     methods:{
         getSales(){     //销售明细  
             requestData('/api/wechat/mmc/detail/order/list',{
-                merchant:1,
-                gmt_created:this.start + '-' + this.end
+                merchant:sessionStorage.getItem('merchant'),
+                gmt_created:this.start + '~' + this.end
             },'get').then((res)=>{
                 if(res.status == 200){
                     this.list = res.data.list;
@@ -147,8 +147,8 @@ export default {
         },
         getList(){      //汇总统计
             requestData('/api/wechat/mmc/summary/order/list',{
-                merchant:1,
-                gmt_created:this.start + '-' + this.end
+                merchant:sessionStorage.getItem('merchant'),
+                gmt_created:this.start + '~' + this.end
             },'get').then((res)=>{
                 if(res.status==200){
                     this.list = res.data.list;
@@ -199,7 +199,8 @@ export default {
                 this.end = JSON.stringify(this.currentDateEnd).substr(1,10);
                 this.ifPickTimeEnd = false;
             }
-            this.getData();
+            this.getSales();
+            this.getList();
         },
         onClickLeft(){
             this.$router.go(-1);

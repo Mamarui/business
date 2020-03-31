@@ -2,6 +2,8 @@ import VueRouter from 'vue-router'
 
 import Index from './index'
 
+import Login from './login.vue'
+
 import Home from './components/index/home';
 import History from './components/index/history';
 
@@ -21,6 +23,8 @@ import VerifyTele from './components/mine/components/accountSecurity/verifyTele.
 import ChangeTradePwd from './components/mine/components/accountSecurity/changeTradePwd.vue'
 import AddBankCard from './components/mine/components/accountSecurity/addBankCard.vue'
 import BankManage from './components/mine/components/accountSecurity/bankManage.vue'
+import BankInfo from './components/mine/components/accountSecurity/bankInfo.vue'
+import DisBandCard from './components/mine/components/accountSecurity/disBandCard.vue'
 
 import Child from './components/mine/components/child.vue'
 import ChildDetail from './components/mine/components/children/childDetail.vue'
@@ -41,6 +45,7 @@ import Account from './components/mine/components/account.vue'
 
 const routes = [
     { path: '/', component: Index, name: 'index' },
+    { path: '/login', component: Login, name: 'login' },
     { path: '/home', component: Home, name: 'home' },
     { path: '/history', component: History, name: 'history' },
     { path: '/productManage', component: ProductManage, name: 'productManage' },
@@ -68,6 +73,8 @@ const routes = [
     { path: '/changeTradePwd', component: ChangeTradePwd, name: 'changeTradePwd' },
     { path: '/addBankCard', component: AddBankCard, name: 'addBankCard' },
     { path: '/bankManage', component: BankManage, name: 'bankManage' },
+    { path: '/bankInfo', component: BankInfo, name: 'bankInfo' },
+    { path: '/disBandCard', component: DisBandCard, name: 'disBandCard' },
 ]
 
 const router = new VueRouter({

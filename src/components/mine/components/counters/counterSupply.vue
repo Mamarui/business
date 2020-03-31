@@ -102,7 +102,7 @@ export default {
                 this.showPicker_goods_name = true;
             }
             requestData(url_,{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status==200){
                     if(res.data!=[]&&res.data.length!=0){
@@ -152,7 +152,8 @@ export default {
                     supply_amount:this.info.amount
                 },'post').then((res)=>{
                     if(res.status==200){
-                        alert(res)
+                        this.$toast(res.message);
+                        this.$router.go(-1);
                     }
                 },(err)=>{
                     alert(err)

@@ -3,9 +3,9 @@
         <van-nav-bar title="账号与安全"
             left-arrow
             @click-left="onClickLeft"/>
-        <router-link :to="{ path: 'curTele', query: { phone: phone }}">
+        <router-link :to="{ path: 'curTele', query: { phone: this.phone }}">
             <van-field
-                v-model="phone"
+                :value="phone"
                 label="手机号"
                 input-align="right"
                 is-link/>
@@ -34,7 +34,7 @@ export default {
         }
     },
     created(){
-        
+        this.getInfo();
     },
     methods:{
         onClickLeft(){
@@ -42,9 +42,10 @@ export default {
         },
         getInfo(){
             requestData('/api/wechat/mmc/user/profile',{
-                user_id:1
+                user_id:sessionStorage.getItem('user_id')
             },'get').then((res)=>{
                 if(res.status==200){
+                    console.log(res)
                     this.phone = res.data.phone;
                 }
             },(err)=>{

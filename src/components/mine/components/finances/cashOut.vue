@@ -40,7 +40,7 @@ export default {
             info:{
                 amount:'',
                 account_id:'',
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
             },
             name:'',
             show_account:false,
@@ -57,7 +57,7 @@ export default {
         },
         getAccount(){
             requestData('/api/wechat/mmc/card/list',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status==200){
                     this.accounts = res.data;
@@ -79,7 +79,7 @@ export default {
         },
         toCashOut(){
             requestData('/api/wechat/mmc/finance/withdrawal',{
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
                 ...this.info
             },'post').then((res)=>{
                 if(res.status==200){

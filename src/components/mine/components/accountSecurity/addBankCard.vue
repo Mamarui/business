@@ -45,8 +45,8 @@ export default {
                 enc_bank_no:'',
                 tel:'',
                 verification_code:'',
-                user_id:1,
-                merchant:1
+                user_id:sessionStorage.getItem('user_id'),
+                merchant:sessionStorage.getItem('merchant')
             },
             isSend:false
         }
@@ -73,11 +73,12 @@ export default {
             },'post').then((res)=>{
                 if(res.status==200){
                     this.$toast(res.data.msg);
-                    if(res.data.hasTpwd==0){
-                        this.$router.push({ path:'changeTradePwd' });
-                    }else{
-                        this.$router.push({ path:'bankManage' });
-                    }
+                    // if(res.data.hasTpwd==0){
+                    //     this.$router.push({ path:'changeTradePwd' });
+                    // }else{
+                    //     this.$router.push({ path:'bankManage' });
+                    // }
+                     this.$router.push({ path:'bankManage' });
                 }else{
                     this.$toast(res.message);
                 }

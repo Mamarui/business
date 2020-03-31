@@ -48,7 +48,7 @@ export default {
     methods:{
         getList(){
             requestData('/api/wechat/mmc/goods/list',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status == 200){
                     this.list = res.data;
@@ -59,7 +59,7 @@ export default {
         },
         getBottom(){
             requestData('/api/wechat/GoodsController/goods/stats',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status == 200){
                     this.for_sale = res.data.for_sale;
@@ -92,7 +92,7 @@ export default {
             requestData('/api/wechat/mmc/goods/update',{
                 id:id,
                 goods_status:this.goods_status,
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'post').then((res)=>{
                 if(res.status == 200){
                     this.getList();

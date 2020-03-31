@@ -116,7 +116,8 @@ export default {
         this.getSales();
         var day = new Date();
         day.setTime(day.getTime());
-        this.date_ = day.getFullYear() + '-' + day.getMonth()+1 + '-' + day.getDate();
+        var month = day.getMonth()+1;
+        this.date_ = day.getFullYear() + '-' + month + '-' + day.getDate();
         this.getList();
     },
     methods:{
@@ -135,7 +136,7 @@ export default {
         getList(){
             requestData('/api/wechat/mmc/summary/order/list',{
                 gmt_created:this.date_,
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status==200){
                     this.list = res.data.list;

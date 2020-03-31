@@ -9,7 +9,7 @@
             <div v-for="(item,index) in product" :key="index" class="product" @click="goInfo(item.id,item.model)">
                 <van-icon name="arrow" class="arrow"/>
                 <van-tag mark :type="item.dto_status=='正常'?'success':(item.dto_status=='缺货'?'danger':(item.dto_status=='连接断开'?'warning':''))" class="tag_normal">{{item.dto_status}}</van-tag>
-                <van-card :tag="item.volume==0?'缺货':''" :title="item.model" :thumb="item.icon==''?'https://img.yzcdn.cn/vant/t-thirt.jpg':item.icon">
+                <van-card :title="item.model" :thumb="item.icon==''?'https://img.yzcdn.cn/vant/t-thirt.jpg':item.icon">
                     <div slot="desc">
                         <div class="van-ellipsis">货机编码 ： {{item.surface_no}}</div>
                         <div class="van-ellipsis">管理员 ： {{item.manager}}</div>
@@ -83,7 +83,7 @@ export default {
             count:0,
             product:[],
             searchForm:{
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
                 manager:12
             }
         }

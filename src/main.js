@@ -31,7 +31,7 @@ import {
     Slider,
     PasswordInput,
     NumberKeyboard,
-
+    Divider 
 
 
 } from 'vant';
@@ -62,6 +62,7 @@ Vue.use(Tag);
 Vue.use(Slider);
 Vue.use(PasswordInput);
 Vue.use(NumberKeyboard);
+Vue.use(Divider);
 
 Vue.config.productionTip = false
 

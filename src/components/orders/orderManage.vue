@@ -36,7 +36,7 @@ export default {
             product_fail:[],            //未支付
             product:[],
             isLoading:true,
-            isPay:0,                    //支付状态 已支付：0 未支付：1
+            isPay:1,                    //支付状态 已支付：1 未支付：0
         }
     },
     created() {
@@ -45,7 +45,7 @@ export default {
     methods: {
         getList(){
             requestData('/api/wechat/cmc/order/list',{
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
                 order_manager:12,
                 order_status:this.isPay
             },'get').then((res)=>{
@@ -60,9 +60,9 @@ export default {
         onClick(name,title){
             this.product = [];
             if(title == '已支付'){
-                this.isPay = 0;
-            }else{
                 this.isPay = 1;
+            }else{
+                this.isPay = 0;
             }
             this.isLoading = true;
             this.getList();

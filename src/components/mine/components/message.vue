@@ -30,7 +30,7 @@ export default {
         },
         getMessage(){
             requestData('/api/message/list',{
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
                 state:0
             },'get').then((res)=>{
                 if(res.status==200){

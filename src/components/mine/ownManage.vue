@@ -63,7 +63,7 @@ export default {
     methods:{
         getInfo(){
             requestData('/api/wechat/mmc/user/profile',{
-                user_id:1
+                user_id:sessionStorage.getItem('user_id')
             },'get').then((res)=>{
                 if(res.status==200){
                     this.info = res.data;

@@ -50,7 +50,7 @@ export default {
             info:{},
             product:[],
             searchForm:{
-                merchant:1,
+                merchant:sessionStorage.getItem('merchant'),
                 manager:12
             }
         }

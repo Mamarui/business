@@ -49,7 +49,7 @@ export default {
         },
         submit(){
             requestData('/api/wechat/mmc/tel/verify',{
-                user_id:1,
+                user_id:sessionStorage.getItem('user_id'),
                 verification_code:this.code
             },'post').then((res)=>{
                 if(res.status==200){

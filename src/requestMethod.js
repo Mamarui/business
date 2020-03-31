@@ -6,7 +6,7 @@ function requestData(url, data, method) {
     return new Promise((resolve, reject) => {
         $.ajax({
             type: method,
-            url: 'http://47.105.134.186:8080/scm' + url,
+            url: 'https://scm.irobotzz.com' + url,
             data: {...data },
             dataType: "json",
             success: function(data) {

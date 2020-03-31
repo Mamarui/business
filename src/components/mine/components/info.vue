@@ -33,10 +33,16 @@
 
 <script>
 import requestData  from '../../../requestMethod';
+import upload  from '../../../upload';
 export default {
     data(){
         return{
-            info:{}
+            info:{
+                avatar:'',
+                name:'',
+                merchant_name:'',
+                phone:''
+            }
         }
     },
     mounted(){
@@ -49,7 +55,13 @@ export default {
 
         // 图片修改
         changeImg(file){
-            this.info.headpic = file.content;
+            let fd = new FormData();
+            fd.append('upfile', file.file);
+            upload('/api/upload',fd,'post').then((res)=>{
+                this.info.avatar = res.url;
+            },(err)=>{
+                alert(err)
+            })
         },
         onClickRight(){
             requestData('/api/wechat/mmc/user/profile/update',{

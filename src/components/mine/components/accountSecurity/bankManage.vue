@@ -3,34 +3,48 @@
         <van-nav-bar title="银行卡管理"
             left-arrow
             @click-left="onClickLeft"/>
-        <div class="bankBox" :style="'background-color:'+ red">
+        <div class="bankBox" @click="toBankInfo(item)" :style="'background-color:'+ item.background" v-for="item in list" :key="item.id">
             <div class="icon">
-                <img src="../../../../assets/1.jpg" alt="">
+                <img :src="item.icon" alt="">
             </div>
             <div class="info">
-                <p class="name">招商银行</p>
-                <p class="type">储蓄卡</p>
-                <p class="code">卡号</p>
+                <p class="name">{{item.bank_name}}</p>
+                <p class="type">{{item.cardType}}</p>
+                <p class="code">{{item.enc_bank_no}}</p>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import requestData  from '../../../../requestMethod';
 export default {
     data(){
         return{
-            red:''
+            list:[]
         }
     },
     created(){
-        this.red = "#000000"
+        this.getList();
     },
     methods:{
         onClickLeft(){
             this.$router.go(-1);
         },
-
+        getList(){
+            requestData('/api/wechat/mmc/card/list',{
+                merchant:sessionStorage.getItem('merchant'),
+            },'get').then((res)=>{
+                if(res.status==200){
+                    this.list = res.data;
+                }
+            },(err)=>{
+                alert(err)
+            })  
+        },
+        toBankInfo(item){
+            this.$router.push({ path:'bankInfo', query:{ id:item.id } });
+        }
     }
 }
 </script>
@@ -49,13 +63,10 @@ export default {
         margin: 0.5rem auto;
         padding: 0 1rem;
     }
-    .red{
-        background-color: red;
-    }
     .icon{
-        width: 5rem;
-        height: 5rem;
-        border-radius: 5rem;
+        width: 2rem;
+        height: 2rem;
+        border-radius: 2rem;
     }
     .icon img{
         width: 100%;

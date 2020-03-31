@@ -29,7 +29,7 @@ export default {
             requestData('/api/wechat/mmc/goods/update',{
                 id:this.$route.query.id,
                 supply_amount:this.supply_amount,
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'post').then((res)=>{
                 if(res.status == 200){
                     this.$toast('补货成功！');

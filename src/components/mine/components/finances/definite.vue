@@ -28,7 +28,7 @@ export default {
         },
         getList(){
             requestData('/api/wechat/mmc/finance/flow',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'post').then((res)=>{
                 if(res.status==200){
                     this.list = res.data;

@@ -44,7 +44,7 @@ export default {
         },
         getFinance(){
             requestData('/api/wechat/mmc/finance',{
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             },'get').then((res)=>{
                 if(res.status==200){
                     this.finance = res.data;

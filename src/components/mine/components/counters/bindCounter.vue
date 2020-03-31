@@ -21,7 +21,7 @@ export default {
                 manager:'',
                 qrcode:'',
                 surface_no:'',
-                merchant:1
+                merchant:sessionStorage.getItem('merchant'),
             }
         }
     },
