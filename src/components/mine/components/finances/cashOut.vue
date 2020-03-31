@@ -62,7 +62,7 @@ export default {
                 if(res.status==200){
                     this.accounts = res.data;
                     this.columns = res.data.map(function(obj){
-                        return obj.name;
+                        return obj.bank_name;
                     });
                 }
             },(err)=>{
@@ -71,7 +71,7 @@ export default {
         },
         onConfirm(value, index){
             this.name = value;
-            this.info.account_id = this.accounts[index].account_id;
+            this.info.account_id = this.accounts[index].id;
             this.show_account = false;
         },
         allCashOut(){
