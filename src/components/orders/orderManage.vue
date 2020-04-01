@@ -46,7 +46,6 @@ export default {
         getList(){
             requestData('/api/wechat/cmc/order/list',{
                 merchant:sessionStorage.getItem('merchant'),
-                order_manager:12,
                 order_status:this.isPay
             },'get').then((res)=>{
                 if(res.status==200){

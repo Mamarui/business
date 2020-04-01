@@ -18,7 +18,7 @@ export default {
         return{
             counter:{
                 name:'',
-                manager:'',
+                manager:sessionStorage.getItem('user_id'),
                 qrcode:'',
                 surface_no:'',
                 merchant:sessionStorage.getItem('merchant'),

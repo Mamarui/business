@@ -4,7 +4,7 @@
             left-arrow
             @click-left="onClickLeft"/>
         <div class="cashoutBox">
-            <p class="toast">当前可提现金额 ¥ {{this.$route.query.withdrawable}}（元）</p>
+            <p class="toast">当前可提现金额 ¥ {{$route.query.withdrawable}}（元）</p>
             <div class="txtIn">
                 <b class="icon">¥</b>
                 <van-field v-model="info.amount" class="txt"/>
@@ -78,17 +78,21 @@ export default {
             this.info.amount = this.$route.query.withdrawable;
         },
         toCashOut(){
-            requestData('/api/wechat/mmc/finance/withdrawal',{
-                merchant:sessionStorage.getItem('merchant'),
-                ...this.info
-            },'post').then((res)=>{
-                if(res.status==200){
-                    this.$toast(res.message);
-                    this.$router.go(-1);
-                }
-            },(err)=>{
-                alert(err)
-            })
+            if(this.info.account_id&&this.info.amount&&(this.$route.query.withdrawable>=this.info.amount)){
+                requestData('/api/wechat/mmc/finance/withdrawal',{
+                    merchant:sessionStorage.getItem('merchant'),
+                    ...this.info
+                },'post').then((res)=>{
+                    if(res.status==200){
+                        this.$toast(res.message);
+                        this.$router.go(-1);
+                    }
+                },(err)=>{
+                    alert(err)
+                })
+            }else{
+                this.$toast('提现金额/收款账户不能为空，可提现金额不能小于提现金额！');
+            }
         }
     }
 }

@@ -51,7 +51,7 @@ export default {
             product:[],
             searchForm:{
                 merchant:sessionStorage.getItem('merchant'),
-                manager:12
+                manager:sessionStorage.getItem('user_id')
             }
         }
     },

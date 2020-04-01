@@ -2,8 +2,8 @@
     <div class="container">
         <van-nav-bar :title="$route.query.name" left-arrow @click-left="onClickLeft"></van-nav-bar>
         <van-cell-group class="cellGroup">
-            <van-cell title="货机名" is-link :value="info.name" />
-            <van-cell title="管理员" is-link :value="info.manager" />
+            <van-cell title="货机名" :value="info.name" />
+            <van-cell title="管理员" :value="info.manager" />
             <van-cell title="机身条码" :value="info.surface_no" />
             <van-cell title="货机型号" :value="info.model" />
         </van-cell-group>
@@ -96,10 +96,8 @@ export default {
         },
         changeTabs(){
             if(this.active == 'cancel'){
-                alert('取消')
                 this.$router.go(-1);
             }else{
-                alert('一键补货')
                 this.$router.push({ name : 'counterSupOnce' , query : { list : this.info.list }});
             }
         },

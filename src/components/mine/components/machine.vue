@@ -83,8 +83,7 @@ export default {
             count:0,
             product:[],
             searchForm:{
-                merchant:sessionStorage.getItem('merchant'),
-                manager:12
+                merchant:sessionStorage.getItem('merchant')
             }
         }
     },
